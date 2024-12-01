@@ -1,33 +1,34 @@
 <?php
+function hitungDiskon($jumlahBayar) {
+    $diskon = 0;
 
-function cekBilangan($angka) {
-  if ($angka == 1) {
-    return "Bilangan ganjil.<br>";
-  } elseif ($angka == 2) {
-    return "Bilangan genap sekaligus bilangan prima.<br>";
-  } elseif ($angka % 2 == 0) {
-    return "Bilangan genap.<br>";
-  } else {
-    // Cek prima
-    $prima = true;
-    for ($i = 2; $i <= sqrt($angka); $i++) {
-      if ($angka % $i == 0) {
-        $prima = false;
-        break;
-      }
+    if ($jumlahBayar >= 500000) {
+        $diskon = 50;
+    } elseif ($jumlahBayar == 250000) {
+        $diskon = 12; // Diskon khusus untuk tepat 250.000
+    } elseif ($jumlahBayar > 100000) {
+        $diskon = 10;
+    } elseif ($jumlahBayar == 100000) {
+        $diskon = 7; // Diskon khusus untuk tepat 100.000
+    } elseif ($jumlahBayar >= 50000) {
+        $diskon = 5;
     }
-    if ($prima) {
-      return "Bilangan ganjil sekaligus bilangan prima.<br>";
-    } else {
-      return "Bilangan ganjil.<br>";
-    }
-  }
+
+    return $diskon;
 }
 
-// Loop untuk input dan cek bilangan
-for ($i = 1; $i <= 20; $i++) {
-  $kategori = cekBilangan($i);
-  echo " <li>Angka $i adalah $kategori\n</li>";
+function totalSetelahDiskon($jumlahBayar) {
+    $diskon = hitungDiskon($jumlahBayar);
+    $jumlahDiskon = ($diskon / 100) * $jumlahBayar;
+    $totalBayar = $jumlahBayar - $jumlahDiskon;
+
+    echo "Total bayar: Rp" . number_format($jumlahBayar, 0, ',', '.') . "<br>";
+    echo "Diskon: " . $diskon . "%<br>";
+    echo "Jumlah diskon: Rp" . number_format($jumlahDiskon, 0, ',', '.') . "<br>";
+    echo "Total setelah diskon: Rp" . number_format($totalBayar, 0, ',', '.') . "<br>";
 }
 
+// Contoh penggunaan
+$totalBelanja = 250000; // Masukkan total belanja di sini
+totalSetelahDiskon($totalBelanja);
 ?>
